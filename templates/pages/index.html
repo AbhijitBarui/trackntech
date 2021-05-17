@@ -1,0 +1,111 @@
+{% extends 'base.html' %}
+{% block title %}Home{% endblock %}
+{% block content %}
+
+<!-- Showcase -->
+<!--Alerts-->
+{% include 'partials/_alerts.html' %}
+<section id="showcase">
+    <div class="container text-center">
+      <div class="home-search p-5">
+        <div class="overlay p-5">
+          <h1 class="display-2 mb-2">
+            TRACK N' TECH
+          </h1>
+          <p class="lead">Accelerating the Future</p>
+          <div class="search">
+            <form action="{% url 'search' %}">
+              <!-- Form Row 1 -->
+              <div class="form-row">
+                <div class="col-md-12 mb-3">
+                  <label class="sr-only">Keywords</label>
+                  <input type="text" name="keywords" class="form-control" placeholder="Search Here (AI, Kawasaki, Huawei..)">
+                </div>
+              </div>
+              <button class="btn btn-secondary btn-block mt-4" type="submit">Search</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Listings -->
+  <section id="listings" class="py-5">
+    <div class="container">
+      <h3 class="text-center mb-3">Latest Blogs Updated!</h3>
+      <div class="row">
+        {% if contents %}
+            {% for content in contents %}
+                        <!-- Content 1 -->
+                <div class="col-md-6 col-lg-4 mb-4">
+                    <div class="card listing-preview">
+                    <img class="card-img-top" src="{{content.photo_main.url}}" alt="photo_main" height="200" width="180">
+                    <div class="card-img-overlay">
+                        <h2>
+                        <span class="badge badge-secondary text-white">{{content.topic}}</span>
+                        </h2>
+                    </div>
+                    <div class="card-body">
+                        <div class="listing-heading text-center">
+                        <h4 class="text-primary">{{content.title}}</h4>
+                        <p>
+                            <i class="fas fa-tag text-secondary"></i>
+                            
+                            {% for tag in content.tags.all %}
+                              <a href="{% url 'tagged' tag.slug %}" class="mr-1 badge badge-info">{{ tag }}</a>
+                            {% endfor %}
+                          
+                          </p>
+                        </div>
+                        <hr>
+                        <div class="row py-2 text-secondary">
+                        <div class="col-12">
+                            <i class="fas fa-user"></i> {{content.author}}</div>
+                        </div>
+                        <div class="row text-secondary pb-2">
+                        <div class="col-6">
+                            <i class="fas fa-clock"></i> {{content.content_date | timesince}}</div>
+                        </div>
+                        <hr>
+                        <a href="{% url 'content' content.id %}" class="btn btn-primary btn-block">Go to Blog</a>
+                    </div>
+                    </div>
+                </div>
+            {% endfor %}
+        {% else %}
+            <p>No Contents available, sorry</p>
+        {% endif %}
+
+      </div>
+    </div>
+  </section>
+
+  <section id="services" class="py-5 bg-secondary text-white">
+    <div class="container">
+      <div class="row text-center">
+        <div class="col-md-4">
+          <i class="fas fa-gamepad fa-4x mr-4"></i>
+          <hr>
+          <h3>Games and Esports</h3>
+          <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Incidunt, debitis nam! Repudiandae, provident iste consequatur
+            hic dignissimos ratione ea quae.</p>
+        </div>
+        <div class="col-md-4">
+          <i class="fas fa-mobile fa-4x mr-4"></i>
+          <hr>
+          <h3>Gadgets and Accessories</h3>
+          <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Incidunt, debitis nam! Repudiandae, provident iste consequatur
+            hic dignissimos ratione ea quae.</p>
+        </div>
+        <div class="col-md-4">
+          <i class="fas fa-motorcycle fa-4x mr-4"></i>
+          <hr>
+          <h3>Rides and Upgrades</h3>
+          <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Incidunt, debitis nam! Repudiandae, provident iste consequatur
+            hic dignissimos ratione ea quae.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+{% endblock %}

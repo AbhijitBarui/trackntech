@@ -1,0 +1,92 @@
+{% extends 'base.html' %}
+{% block title %}Search Results{% endblock %}
+{% block content %}
+
+<section id="showcase-inner" class="showcase-search text-white py-5">
+    <div class="container">
+      <div class="row text-center">
+        <div class="col-md-12">
+          <form action="{% url 'search' %}">
+            <!--Alerts-->
+            {% include 'partials/_alerts.html' %}
+            <!-- Form Row 1 -->
+            <div class="form-row">
+                <div class="col-md-12 mb-3">
+                  <label class="sr-only">Keywords</label>
+                  <input type="text" name="keywords" class="form-control" placeholder="Search Here (AI, Kawasaki, Huawei..)" value="{{values.keywords}}">
+                </div>
+              </div>
+            <button class="btn btn-secondary btn-block mt-4" type="submit">Submit form</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Breadcrumb -->
+  <section id="bc" class="mt-3">
+    <div class="container">
+      <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item">
+            <a href="{% url 'index' %}">
+              <i class="fas fa-home"></i> Home</a>
+          </li>
+          <li class="breadcrumb-item">
+            <a href="{% url 'contents' %}">Browse Featured Blogs</a>
+          </li>
+          <li class="breadcrumb-item active"> Search Results</li>
+        </ol>
+      </nav>
+    </div>
+  </section>
+
+  <!-- Listings -->
+  <section id="listings" class="py-4">
+    <div class="container">
+      <div class="row">
+        {% if contents %}
+            {% for content in contents %}
+                        <!-- Content 1 -->
+                <div class="col-md-6 col-lg-4 mb-4">
+                    <div class="card listing-preview">
+                    <img class="card-img-top" src="{{content.photo_main.url}}" alt="photo_main" height="200" width="180">
+                    <div class="card-img-overlay">
+                        <h2>
+                        <span class="badge badge-secondary text-white">{{content.topic}}</span>
+                        </h2>
+                    </div>
+                    <div class="card-body">
+                        <div class="listing-heading text-center">
+                        <h4 class="text-primary">{{content.title}}</h4>
+                        <p>
+                            <i class="fas fa-tag text-secondary"></i>
+                            
+                            {% for tag in content.tags.all %}
+                              <a href="{% url 'tagged' tag.slug %}" class="mr-1 badge badge-info">{{ tag }}</a>
+                            {% endfor %}
+                          
+                          </p>
+                        </div>
+                        <hr>
+                        <div class="row py-2 text-secondary">
+                        <div class="col-12">
+                            <i class="fas fa-user"></i> {{content.author}}</div>
+                        </div>
+                        <div class="row text-secondary pb-2">
+                        <div class="col-6">
+                            <i class="fas fa-clock"></i> {{content.content_date | timesince}}</div>
+                        </div>
+                        <hr>
+                        <a href="{% url 'content' content.id %}" class="btn btn-primary btn-block">Go to Blog</a>
+                    </div>
+                    </div>
+                </div>
+            {% endfor %}
+        {% else %}
+            <p>No Contents available, sorry</p>
+        {% endif %}
+      </div>
+    </div>
+  </section>
+{% endblock %}
