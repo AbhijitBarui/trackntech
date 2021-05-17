@@ -29,7 +29,6 @@ class Content(models.Model):
     photo_8 = models.ImageField(upload_to="photos/%Y/%m/%d/", blank=True)
     text_8 = models.TextField(blank=True)
     #tags:
-    slug = models.SlugField(unique=True, max_length=100)
     tags = TaggableManager()
     #upvotes and downvotes:
 
