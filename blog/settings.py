@@ -33,6 +33,7 @@ INSTALLED_APPS = [
     'accounts.apps.AccountsConfig',
     'interests.apps.InterestsConfig',
     'votes.apps.VotesConfig',
+    'follows.apps.FollowsConfig',
     'taggit',
 ]
 

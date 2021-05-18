@@ -139,8 +139,7 @@
             </div>
           </div>
 
-          <!--UPVOTE DOWNVOTE FUNCTIONALITY-->
-            {% if user.is_authenticated %}
+          <!--UPVOTE DOWNVOTE FUNCTIONALITY-->           
               <div class="row mb-5">
                 <div class="col md-12">
                   <!--Upvote Button-->
@@ -188,32 +187,7 @@
                     {{down_count}}
                   </form>
                 </div>
-              </div>
-            {% else %}
-            <!--FAKE REDIRECTING BUTTONS-->
-              <div class="row mb-5">
-                <div class="col md-12">
-                  <!--Fake Upvote Button-->
-                  <button class="btn">
-                    <a href="redirect.html" class="page-link">
-                      <i class="far fa-thumbs-up fa-3x"></i>
-                    </a>
-                  </button>
-                </div>
-                <div class="col md-12"></div>
-                <div class="col md-12"></div>
-                <div class="col md-12"></div>
-                <div class="col md-12"></div>
-                <div class="col md-12">
-                  <!--Fake Downvote Button-->
-                  <button class="btn">
-                    <a href="redirect.html" class="page-link">
-                      <i class="far fa-thumbs-down fa-3x"></i>
-                    </a>
-                  </button>
-                </div>
-              </div>
-            {% endif %}
+              </div>        
           <button class="btn-primary btn-block btn-lg" data-toggle="modal" data-target="#inquiryModal">Mark as Favorite</button>
         </div>
         <div class="col-md-3">
@@ -223,6 +197,7 @@
               <h5 class="card-title">Blog's Author</h5>
               <h6 class="text-secondary">{{content.author}}</h6>
             </div>
+            <button class="btn-primary btn-block btn-lg" data-toggle="modal" data-target="#followModal">Follow {{content.author}}'s Posts</button>
           </div>
         </div>
       </div>
@@ -264,6 +239,54 @@
             </div>
             <hr>
             <input type="submit" value="Add as Favorites" class="btn btn-block btn-secondary">
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- Follow Modal -->
+  <div class="modal fade" id="followModal" role="dialog">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="followModalLabel">Follow Author</h5>
+          <button type="button" class="close" data-dismiss="modal">
+            <span>&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form action="{% url 'follow' %}" method="POST">
+            {% csrf_token %}
+            {% if user.is_authenticated %}
+              <input type="hidden" name="user_id" value="{{user.id}}">
+            {% else %}
+              <input type="hidden" name="user_id" value="0">
+            {% endif %}
+            <input type="hidden" name="author_email" value="{{content.author.email}}">
+            <input type="hidden" name="content_id" value="{{content.id}}">
+            <input type="hidden" name="author_id" value="{{content.author.id}}">
+            <div class="form-group">
+              <label for="email" class="col-form-label">Email:</label>
+              <input type="email" name="email" class="form-control"
+              {% if user.is_authenticated %}
+              value="{{user.email}}"
+              {% endif %} required>
+            </div>
+            <div class="form-group">
+              <label for="phone" class="col-form-label">Phone:</label>
+              <input type="text" name="phone" class="form-control">
+            </div>
+            <div class="form-group">
+              <label for="name" class="col-form-label">Name:</label>
+              <input type="text" name="name" class="form-control"
+              {% if user.is_authenticated %}
+                value="{{user.first_name}} {{user.last_name}}"
+              {% endif %} required>
+            </div>
+            <hr>
+            <input type="submit" value="Follow" class="btn btn-block btn-secondary">
           </form>
         </div>
       </div>
