@@ -141,3 +141,10 @@ MESSAGE_TAGS = {
 
 #tagg case insensetive:
 TAGGIT_CASE_INSENSITIVE = True
+
+#Mail Settings
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_HOST_USER = 'trackandtech1@gmail.com'
+EMAIL_HOST_PASSWORD = '7692xclusv'
+EMAIL_USE_TLS = True
