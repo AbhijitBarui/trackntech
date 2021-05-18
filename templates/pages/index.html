@@ -43,7 +43,11 @@
                     <img class="card-img-top" src="{{content.photo_main.url}}" alt="photo_main" height="200" width="180">
                     <div class="card-img-overlay">
                         <h2>
-                        <span class="badge badge-secondary text-white">{{content.topic}}</span>
+                          {% for tag in content.tags.all %}
+                            {% if tag.name|title == content.topic %}
+                              <a href="{% url 'tagged' tag.slug %}" class="badge badge-secondary text-white">{{ content.topic|title }}</a>
+                            {% endif %}
+                          {% endfor %}
                         </h2>
                     </div>
                     <div class="card-body">
