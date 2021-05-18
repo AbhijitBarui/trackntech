@@ -9,4 +9,5 @@ urlpatterns = [
     path('contents/', include('contents.urls')),
     path('accounts/', include('accounts.urls')),
     path('interests/', include('interests.urls')),
+    path('votes/', include('votes.urls')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

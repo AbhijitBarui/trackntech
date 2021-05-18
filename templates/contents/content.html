@@ -138,6 +138,83 @@
               <p style="font-size: 20px;">{{content.text_8}}</p>
             </div>
           </div>
+
+          <!--UPVOTE DOWNVOTE FUNCTIONALITY-->
+            {% if user.is_authenticated %}
+              <div class="row mb-5">
+                <div class="col md-12">
+                  <!--Upvote Button-->
+                      <form action="{% url 'upvote' %}" method="POST">
+                        {% csrf_token %}
+                        {% if user.is_authenticated %}
+                            <input type="hidden" name="user_id" value="{{user.id}}">
+                        {% else %}
+                            <input type="hidden" name="user_id" value="0">
+                        {% endif %}
+                        <input type="hidden" name="content_id" value="{{content.id}}">
+                        <input type="hidden" name="content" value="{{content.title}}">
+                        <input type="hidden" name="name" 
+                          {% if user.is_authenticated %}
+                            value="{{user.first_name}} {{user.last_name}}"
+                          {% endif %} required>
+                        <button type="submit" class="btn">
+                          <i class="far fa-thumbs-up fa-3x"></i>
+                        </button>
+                        {{up_count}}
+                      </form>
+                </div>
+                <div class="col md-12"></div>
+                <div class="col md-12"></div>
+                <div class="col md-12"></div>
+                <div class="col md-12"></div>
+                <div class="col md-12">
+                  <!--Downvote Button-->
+                  <form action="{% url 'downvote' %}" method="POST">
+                    {% csrf_token %}
+                    {% if user.is_authenticated %}
+                        <input type="hidden" name="user_id" value="{{user.id}}">
+                    {% else %}
+                        <input type="hidden" name="user_id" value="0">
+                    {% endif %}
+                    <input type="hidden" name="content_id" value="{{content.id}}">
+                    <input type="hidden" name="content" value="{{content.title}}">
+                    <input type="hidden" name="name" 
+                      {% if user.is_authenticated %}
+                        value="{{user.first_name}} {{user.last_name}}"
+                      {% endif %} required>
+                    <button type="submit" class="btn">
+                      <i class="far fa-thumbs-down fa-3x"></i>
+                    </button>
+                    {{down_count}}
+                  </form>
+                </div>
+              </div>
+            {% else %}
+            <!--FAKE REDIRECTING BUTTONS-->
+              <div class="row mb-5">
+                <div class="col md-12">
+                  <!--Fake Upvote Button-->
+                  <button class="btn">
+                    <a href="redirect.html" class="page-link">
+                      <i class="far fa-thumbs-up fa-3x"></i>
+                    </a>
+                  </button>
+                </div>
+                <div class="col md-12"></div>
+                <div class="col md-12"></div>
+                <div class="col md-12"></div>
+                <div class="col md-12"></div>
+                <div class="col md-12">
+                  <!--Fake Downvote Button-->
+                  <button class="btn">
+                    <a href="redirect.html" class="page-link">
+                      <i class="far fa-thumbs-down fa-3x"></i>
+                    </a>
+                  </button>
+                </div>
+              </div>
+            {% endif %}
+          <button class="btn-primary btn-block btn-lg" data-toggle="modal" data-target="#inquiryModal">Mark as Favorite</button>
         </div>
         <div class="col-md-3">
           <div class="card mb-3">
@@ -151,9 +228,6 @@
       </div>
     </div>
   </section> 
-  </div>
-  <div class="col-md-3">
-      <button class="btn-primary btn-block btn-lg" data-toggle="modal" data-target="#inquiryModal">Mark as Favorite</button>
   </div>
 
   <!-- Inquiry Modal -->

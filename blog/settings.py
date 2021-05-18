@@ -32,6 +32,7 @@ INSTALLED_APPS = [
     'django.contrib.humanize',
     'accounts.apps.AccountsConfig',
     'interests.apps.InterestsConfig',
+    'votes.apps.VotesConfig',
     'taggit',
 ]
 

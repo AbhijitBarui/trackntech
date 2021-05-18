@@ -1,0 +1,31 @@
+<form action="{% url 'upvote' %}" method="POST">
+    {% csrf_token %}
+    {% if user.is_authenticated %}
+        <input type="hidden" name="user_id" value="{{user.id}}">
+    {% else %}
+        <input type="hidden" name="user_id" value="0">
+    {% endif %}
+    <input type="hidden" name="content_id" value="{{content.id}}">
+    <input type="hidden" name="content" value="{{content.title}}">
+    <input type="hidden" name="name" 
+      {% if user.is_authenticated %}
+        value="{{user.first_name}} {{user.last_name}}"
+        {% endif %} required>
+    <input type="submit" value="Add as Favorites" class="btn btn-block btn-secondary">
+</form>
+
+<form action="{% url 'downvote' %}" method="POST">
+            {% csrf_token %}
+            {% if user.is_authenticated %}
+              <input type="hidden" name="user_id" value="{{user.id}}">
+            {% else %}
+              <input type="hidden" name="user_id" value="0">
+            {% endif %}
+            <input type="hidden" name="content_id" value="{{content.id}}">
+            <input type="hidden" name="content" value="{{content.title}}">
+            <input type="hidden" name="name" 
+              {% if user.is_authenticated %}
+                value="{{user.first_name}} {{user.last_name}}"
+              {% endif %} required>
+            <input type="submit" value="Add as Favorites" class="btn btn-block btn-secondary">
+</form>

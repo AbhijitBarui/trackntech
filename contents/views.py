@@ -5,6 +5,8 @@ from itertools import chain
 
 from taggit.models import Tag
 
+from votes.models import Vote
+
 
 def contents(request):
     contents = Content.objects.order_by('-content_date').filter(is_published=True)
@@ -21,8 +23,12 @@ def contents(request):
 
 def content(request, content_id):
     content = get_object_or_404(Content, pk=content_id)
+    up_count = len(Vote.objects.all().filter(content_id=content_id, has_upvoted = True))
+    down_count = len(Vote.objects.all().filter(content_id=content_id, has_downvoted = True))
     context = {
-        'content': content
+        'content': content,
+        'up_count': up_count,
+        'down_count': down_count,
     }
     return render(request, 'contents/content.html', context)
 
