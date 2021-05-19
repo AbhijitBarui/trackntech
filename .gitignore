@@ -163,3 +163,5 @@ virt
 media
 static
 manual_log.txt
+.env
+env
